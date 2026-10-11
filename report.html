@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Redteam report</title>
+<style>:root { color-scheme: light dark; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; margin: 0; padding: 0 0 3rem; background: #ffffff; color: #24292e; line-height: 1.5; }
+@media (prefers-color-scheme: dark) { body { background: #0d1117; color: #c9d1d9; } }
+header { padding: 2rem 2rem 1.5rem; border-bottom: 1px solid #e1e4e8; }
+@media (prefers-color-scheme: dark) { header { border-bottom-color: #30363d; } }
+header h1 { margin: 0 0 0.5rem; font-size: 1.75rem; }
+.summary { font-size: 1.1rem; margin: 0.25rem 0; }
+.meta { color: #6a737d; font-size: 0.9rem; margin: 0.25rem 0; }
+@media (prefers-color-scheme: dark) { .meta { color: #8b949e; } }
+.badge { display: inline-block; padding: 0.1em 0.6em; border-radius: 2em; color: #fff; font-size: 0.85em; font-weight: 600; margin-right: 0.4em; }
+.badge.rule { background: #6a737d; }
+.badge.source { background: transparent; color: #6a737d; border: 1px solid #d1d5da; font-weight: 400; }
+@media (prefers-color-scheme: dark) { .badge.source { color: #8b949e; border-color: #30363d; } }
+section.severity { padding: 0 2rem; }
+section.severity h2 { text-transform: capitalize; border-bottom: 2px solid; padding-bottom: 0.25rem; }
+article.finding { border: 1px solid #e1e4e8; border-radius: 6px; padding: 1rem 1.25rem; margin: 1rem 0; }
+@media (prefers-color-scheme: dark) { article.finding { border-color: #30363d; background: #161b22; } }
+article.finding h3 { margin: 0 0 0.5rem; font-size: 1.05rem; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; word-break: break-all; }
+article.finding p.message { margin: 0.5rem 0; }
+article.finding p.remediation { margin: 0.5rem 0 0; }
+article.finding pre { background: #f6f8fa; border-radius: 6px; padding: 0.75rem 1rem; overflow-x: auto; font-size: 0.85rem; }
+@media (prefers-color-scheme: dark) { article.finding pre { background: #0d1117; } }
+article.finding pre code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.empty { padding: 2rem; font-size: 1.1rem; }
+footer { padding: 1.5rem 2rem 0; color: #6a737d; font-size: 0.85rem; }
+@media (prefers-color-scheme: dark) { footer { color: #8b949e; } }</style>
+</head>
+<body>
+<header>
+<h1>Redteam report</h1>
+<p class="summary">80 findings: 80 medium.</p>
+<p class="meta">Scanned: <code>/home/hatch/workspace/redteam/testdata</code></p>
+<p class="meta">Generated 2026-10-11T17:00:19.658Z · redteam v0.1.0</p>
+</header>
+<section class="severity">
+<h2 style="border-color: #b08800"><span class="badge" style="background: #b08800">medium</span> 80 findings</h2>
+<article class="finding">
+<h3>sec-child-process/vulnerable.js:6</h3>
+<p><span class="badge rule">sec-child-process</span><span class="badge source">source: ast</span></p>
+<p class="message">Child process spawned with shell:true / shell=True (or os.system/os.popen): the command is interpreted by a shell, so any interpolated input becomes shell injection</p>
+<pre><code>exec(&quot;ls &quot; + dir, { shell: true }, cb)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Drop the shell option (use execFile/spawn with an argv array, or subprocess without shell=True) so arguments are passed directly without shell interpretation.</p>
+</article>
+<article class="finding">
+<h3>sec-child-process/vulnerable.js:6</h3>
+<p><span class="badge rule">sec-command-injection</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible command injection: a dynamically built string (concatenation, template/f-string, or variable) is passed as the shell command</p>
+<pre><code>exec(&quot;ls &quot; + dir, { shell: true }, cb)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Pass arguments as an argv array (execFile/spawn, subprocess without shell=True) and validate any dynamic parts against an allowlist; never interpolate untrusted input into a shell command.</p>
+</article>
+<article class="finding">
+<h3>sec-child-process/vulnerable.js:10</h3>
+<p><span class="badge rule">sec-child-process</span><span class="badge source">source: ast</span></p>
+<p class="message">Child process spawned with shell:true / shell=True (or os.system/os.popen): the command is interpreted by a shell, so any interpolated input becomes shell injection</p>
+<pre><code>child_process.execSync(&quot;du -sh &quot; + target, { shell: true })</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Drop the shell option (use execFile/spawn with an argv array, or subprocess without shell=True) so arguments are passed directly without shell interpretation.</p>
+</article>
+<article class="finding">
+<h3>sec-child-process/vulnerable.js:10</h3>
+<p><span class="badge rule">sec-command-injection</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible command injection: a dynamically built string (concatenation, template/f-string, or variable) is passed as the shell command</p>
+<pre><code>child_process.execSync(&quot;du -sh &quot; + target, { shell: true })</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Pass arguments as an argv array (execFile/spawn, subprocess without shell=True) and validate any dynamic parts against an allowlist; never interpolate untrusted input into a shell command.</p>
+</article>
+<article class="finding">
+<h3>sec-child-process/vulnerable.py:7</h3>
+<p><span class="badge rule">sec-child-process</span><span class="badge source">source: ast</span></p>
+<p class="message">Child process spawned with shell:true / shell=True (or os.system/os.popen): the command is interpreted by a shell, so any interpolated input becomes shell injection</p>
+<pre><code>os.system(&quot;ls &quot; + d)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Drop the shell option (use execFile/spawn with an argv array, or subprocess without shell=True) so arguments are passed directly without shell interpretation.</p>
+</article>
+<article class="finding">
+<h3>sec-child-process/vulnerable.py:7</h3>
+<p><span class="badge rule">sec-command-injection</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible command injection: a dynamically built string (concatenation, template/f-string, or variable) is passed as the shell command</p>
+<pre><code>os.system(&quot;ls &quot; + d)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Pass arguments as an argv array (execFile/spawn, subprocess without shell=True) and validate any dynamic parts against an allowlist; never interpolate untrusted input into a shell command.</p>
+</article>
+<article class="finding">
+<h3>sec-child-process/vulnerable.py:11</h3>
+<p><span class="badge rule">sec-child-process</span><span class="badge source">source: ast</span></p>
+<p class="message">Child process spawned with shell:true / shell=True (or os.system/os.popen): the command is interpreted by a shell, so any interpolated input becomes shell injection</p>
+<pre><code>subprocess.run(&quot;du -sh &quot; + target, shell=True, capture_output=True)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Drop the shell option (use execFile/spawn with an argv array, or subprocess without shell=True) so arguments are passed directly without shell interpretation.</p>
+</article>
+<article class="finding">
+<h3>sec-child-process/vulnerable.py:11</h3>
+<p><span class="badge rule">sec-command-injection</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible command injection: a dynamically built string (concatenation, template/f-string, or variable) is passed as the shell command</p>
+<pre><code>subprocess.run(&quot;du -sh &quot; + target, shell=True, capture_output=True)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Pass arguments as an argv array (execFile/spawn, subprocess without shell=True) and validate any dynamic parts against an allowlist; never interpolate untrusted input into a shell command.</p>
+</article>
+<article class="finding">
+<h3>sec-child-process/vulnerable.ts:5</h3>
+<p><span class="badge rule">sec-child-process</span><span class="badge source">source: ast</span></p>
+<p class="message">Child process spawned with shell:true / shell=True (or os.system/os.popen): the command is interpreted by a shell, so any interpolated input becomes shell injection</p>
+<pre><code>exec(&quot;ls &quot; + dir, { shell: true }, cb)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Drop the shell option (use execFile/spawn with an argv array, or subprocess without shell=True) so arguments are passed directly without shell interpretation.</p>
+</article>
+<article class="finding">
+<h3>sec-child-process/vulnerable.ts:5</h3>
+<p><span class="badge rule">sec-command-injection</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible command injection: a dynamically built string (concatenation, template/f-string, or variable) is passed as the shell command</p>
+<pre><code>exec(&quot;ls &quot; + dir, { shell: true }, cb)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Pass arguments as an argv array (execFile/spawn, subprocess without shell=True) and validate any dynamic parts against an allowlist; never interpolate untrusted input into a shell command.</p>
+</article>
+<article class="finding">
+<h3>sec-child-process/vulnerable.ts:9</h3>
+<p><span class="badge rule">sec-child-process</span><span class="badge source">source: ast</span></p>
+<p class="message">Child process spawned with shell:true / shell=True (or os.system/os.popen): the command is interpreted by a shell, so any interpolated input becomes shell injection</p>
+<pre><code>execSync(&quot;du -sh &quot; + target, { shell: true })</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Drop the shell option (use execFile/spawn with an argv array, or subprocess without shell=True) so arguments are passed directly without shell interpretation.</p>
+</article>
+<article class="finding">
+<h3>sec-child-process/vulnerable.ts:9</h3>
+<p><span class="badge rule">sec-command-injection</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible command injection: a dynamically built string (concatenation, template/f-string, or variable) is passed as the shell command</p>
+<pre><code>execSync(&quot;du -sh &quot; + target, { shell: true })</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Pass arguments as an argv array (execFile/spawn, subprocess without shell=True) and validate any dynamic parts against an allowlist; never interpolate untrusted input into a shell command.</p>
+</article>
+<article class="finding">
+<h3>sec-command-injection/vulnerable.js:5</h3>
+<p><span class="badge rule">sec-command-injection</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible command injection: a dynamically built string (concatenation, template/f-string, or variable) is passed as the shell command</p>
+<pre><code>exec(&quot;git log --oneline &quot; + branch, cb)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Pass arguments as an argv array (execFile/spawn, subprocess without shell=True) and validate any dynamic parts against an allowlist; never interpolate untrusted input into a shell command.</p>
+</article>
+<article class="finding">
+<h3>sec-command-injection/vulnerable.js:9</h3>
+<p><span class="badge rule">sec-command-injection</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible command injection: a dynamically built string (concatenation, template/f-string, or variable) is passed as the shell command</p>
+<pre><code>spawn(`ffmpeg -i ${input} ${output}`)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Pass arguments as an argv array (execFile/spawn, subprocess without shell=True) and validate any dynamic parts against an allowlist; never interpolate untrusted input into a shell command.</p>
+</article>
+<article class="finding">
+<h3>sec-command-injection/vulnerable.py:7</h3>
+<p><span class="badge rule">sec-child-process</span><span class="badge source">source: ast</span></p>
+<p class="message">Child process spawned with shell:true / shell=True (or os.system/os.popen): the command is interpreted by a shell, so any interpolated input becomes shell injection</p>
+<pre><code>os.system(&quot;git log --oneline &quot; + branch)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Drop the shell option (use execFile/spawn with an argv array, or subprocess without shell=True) so arguments are passed directly without shell interpretation.</p>
+</article>
+<article class="finding">
+<h3>sec-command-injection/vulnerable.py:7</h3>
+<p><span class="badge rule">sec-command-injection</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible command injection: a dynamically built string (concatenation, template/f-string, or variable) is passed as the shell command</p>
+<pre><code>os.system(&quot;git log --oneline &quot; + branch)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Pass arguments as an argv array (execFile/spawn, subprocess without shell=True) and validate any dynamic parts against an allowlist; never interpolate untrusted input into a shell command.</p>
+</article>
+<article class="finding">
+<h3>sec-command-injection/vulnerable.py:11</h3>
+<p><span class="badge rule">sec-child-process</span><span class="badge source">source: ast</span></p>
+<p class="message">Child process spawned with shell:true / shell=True (or os.system/os.popen): the command is interpreted by a shell, so any interpolated input becomes shell injection</p>
+<pre><code>subprocess.run(f&quot;ls -la {d}&quot;, shell=True)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Drop the shell option (use execFile/spawn with an argv array, or subprocess without shell=True) so arguments are passed directly without shell interpretation.</p>
+</article>
+<article class="finding">
+<h3>sec-command-injection/vulnerable.py:11</h3>
+<p><span class="badge rule">sec-command-injection</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible command injection: a dynamically built string (concatenation, template/f-string, or variable) is passed as the shell command</p>
+<pre><code>subprocess.run(f&quot;ls -la {d}&quot;, shell=True)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Pass arguments as an argv array (execFile/spawn, subprocess without shell=True) and validate any dynamic parts against an allowlist; never interpolate untrusted input into a shell command.</p>
+</article>
+<article class="finding">
+<h3>sec-command-injection/vulnerable.ts:5</h3>
+<p><span class="badge rule">sec-command-injection</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible command injection: a dynamically built string (concatenation, template/f-string, or variable) is passed as the shell command</p>
+<pre><code>exec(&quot;git log --oneline &quot; + branch, cb)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Pass arguments as an argv array (execFile/spawn, subprocess without shell=True) and validate any dynamic parts against an allowlist; never interpolate untrusted input into a shell command.</p>
+</article>
+<article class="finding">
+<h3>sec-command-injection/vulnerable.ts:9</h3>
+<p><span class="badge rule">sec-command-injection</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible command injection: a dynamically built string (concatenation, template/f-string, or variable) is passed as the shell command</p>
+<pre><code>spawn(`ffmpeg -i ${input} ${output}`)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Pass arguments as an argv array (execFile/spawn, subprocess without shell=True) and validate any dynamic parts against an allowlist; never interpolate untrusted input into a shell command.</p>
+</article>
+<article class="finding">
+<h3>sec-eval/vulnerable.js:3</h3>
+<p><span class="badge rule">sec-eval</span><span class="badge source">source: ast</span></p>
+<p class="message">Dynamic code execution: eval()/Function()/exec() runs its argument as code, enabling code injection if the input is attacker-influenced</p>
+<pre><code>eval(userInput)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Avoid eval-style APIs. For data use JSON.parse (or ast.literal_eval in Python); for dynamic behavior dispatch through a lookup table of pre-defined functions.</p>
+</article>
+<article class="finding">
+<h3>sec-eval/vulnerable.js:4</h3>
+<p><span class="badge rule">sec-eval</span><span class="badge source">source: ast</span></p>
+<p class="message">Dynamic code execution: eval()/Function()/exec() runs its argument as code, enabling code injection if the input is attacker-influenced</p>
+<pre><code>new Function(&quot;return &quot; + expr)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Avoid eval-style APIs. For data use JSON.parse (or ast.literal_eval in Python); for dynamic behavior dispatch through a lookup table of pre-defined functions.</p>
+</article>
+<article class="finding">
+<h3>sec-eval/vulnerable.js:11</h3>
+<p><span class="badge rule">sec-eval</span><span class="badge source">source: ast</span></p>
+<p class="message">Dynamic code execution: eval()/Function()/exec() runs its argument as code, enabling code injection if the input is attacker-influenced</p>
+<pre><code>window.eval(userInput)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Avoid eval-style APIs. For data use JSON.parse (or ast.literal_eval in Python); for dynamic behavior dispatch through a lookup table of pre-defined functions.</p>
+</article>
+<article class="finding">
+<h3>sec-eval/vulnerable.py:3</h3>
+<p><span class="badge rule">sec-eval</span><span class="badge source">source: ast</span></p>
+<p class="message">Dynamic code execution: eval()/Function()/exec() runs its argument as code, enabling code injection if the input is attacker-influenced</p>
+<pre><code>eval(user_input)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Avoid eval-style APIs. For data use JSON.parse (or ast.literal_eval in Python); for dynamic behavior dispatch through a lookup table of pre-defined functions.</p>
+</article>
+<article class="finding">
+<h3>sec-eval/vulnerable.py:4</h3>
+<p><span class="badge rule">sec-eval</span><span class="badge source">source: ast</span></p>
+<p class="message">Dynamic code execution: eval()/Function()/exec() runs its argument as code, enabling code injection if the input is attacker-influenced</p>
+<pre><code>exec(cmd)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Avoid eval-style APIs. For data use JSON.parse (or ast.literal_eval in Python); for dynamic behavior dispatch through a lookup table of pre-defined functions.</p>
+</article>
+<article class="finding">
+<h3>sec-eval/vulnerable.ts:3</h3>
+<p><span class="badge rule">sec-eval</span><span class="badge source">source: ast</span></p>
+<p class="message">Dynamic code execution: eval()/Function()/exec() runs its argument as code, enabling code injection if the input is attacker-influenced</p>
+<pre><code>eval(userInput)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Avoid eval-style APIs. For data use JSON.parse (or ast.literal_eval in Python); for dynamic behavior dispatch through a lookup table of pre-defined functions.</p>
+</article>
+<article class="finding">
+<h3>sec-eval/vulnerable.ts:4</h3>
+<p><span class="badge rule">sec-eval</span><span class="badge source">source: ast</span></p>
+<p class="message">Dynamic code execution: eval()/Function()/exec() runs its argument as code, enabling code injection if the input is attacker-influenced</p>
+<pre><code>new Function(&quot;return &quot; + expr)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Avoid eval-style APIs. For data use JSON.parse (or ast.literal_eval in Python); for dynamic behavior dispatch through a lookup table of pre-defined functions.</p>
+</article>
+<article class="finding">
+<h3>sec-insecure-random/vulnerable.js:3</h3>
+<p><span class="badge rule">sec-insecure-random</span><span class="badge source">source: ast</span></p>
+<p class="message">Insecure randomness: Math.random()/random.* is a predictable PRNG — not for secrets/tokens; an attacker who observes outputs can predict future values</p>
+<pre><code>Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Use a CSPRNG: crypto.getRandomValues()/crypto.randomUUID() (JS/TS) or the secrets module / os.urandom (Python) for tokens, session ids, and password resets.</p>
+</article>
+<article class="finding">
+<h3>sec-insecure-random/vulnerable.py:6</h3>
+<p><span class="badge rule">sec-insecure-random</span><span class="badge source">source: ast</span></p>
+<p class="message">Insecure randomness: Math.random()/random.* is a predictable PRNG — not for secrets/tokens; an attacker who observes outputs can predict future values</p>
+<pre><code>str(random.randint(100000, 999999))</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Use a CSPRNG: crypto.getRandomValues()/crypto.randomUUID() (JS/TS) or the secrets module / os.urandom (Python) for tokens, session ids, and password resets.</p>
+</article>
+<article class="finding">
+<h3>sec-insecure-random/vulnerable.ts:3</h3>
+<p><span class="badge rule">sec-insecure-random</span><span class="badge source">source: ast</span></p>
+<p class="message">Insecure randomness: Math.random()/random.* is a predictable PRNG — not for secrets/tokens; an attacker who observes outputs can predict future values</p>
+<pre><code>Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Use a CSPRNG: crypto.getRandomValues()/crypto.randomUUID() (JS/TS) or the secrets module / os.urandom (Python) for tokens, session ids, and password resets.</p>
+</article>
+<article class="finding">
+<h3>sec-open-redirect/vulnerable.js:4</h3>
+<p><span class="badge rule">sec-open-redirect</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible open redirect: the redirect target is a non-literal value; an attacker-supplied URL here enables phishing via your domain&#39;s trust</p>
+<pre><code>res.redirect(next)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Redirect only to a fixed allowlist of paths/hosts (or validate the target with new URL() and check origin); never redirect to raw user input.</p>
+</article>
+<article class="finding">
+<h3>sec-open-redirect/vulnerable.js:8</h3>
+<p><span class="badge rule">sec-open-redirect</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible open redirect: the redirect target is a non-literal value; an attacker-supplied URL here enables phishing via your domain&#39;s trust</p>
+<pre><code>window.location = dest</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Redirect only to a fixed allowlist of paths/hosts (or validate the target with new URL() and check origin); never redirect to raw user input.</p>
+</article>
+<article class="finding">
+<h3>sec-open-redirect/vulnerable.py:7</h3>
+<p><span class="badge rule">sec-open-redirect</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible open redirect: the redirect target is a non-literal value; an attacker-supplied URL here enables phishing via your domain&#39;s trust</p>
+<pre><code>redirect(&quot;/go/&quot; + dest)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Redirect only to a fixed allowlist of paths/hosts (or validate the target with new URL() and check origin); never redirect to raw user input.</p>
+</article>
+<article class="finding">
+<h3>sec-open-redirect/vulnerable.py:11</h3>
+<p><span class="badge rule">sec-open-redirect</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible open redirect: the redirect target is a non-literal value; an attacker-supplied URL here enables phishing via your domain&#39;s trust</p>
+<pre><code>redirect(f&quot;/welcome/{username}&quot;)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Redirect only to a fixed allowlist of paths/hosts (or validate the target with new URL() and check origin); never redirect to raw user input.</p>
+</article>
+<article class="finding">
+<h3>sec-open-redirect/vulnerable.ts:11</h3>
+<p><span class="badge rule">sec-open-redirect</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible open redirect: the redirect target is a non-literal value; an attacker-supplied URL here enables phishing via your domain&#39;s trust</p>
+<pre><code>res.redirect(next)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Redirect only to a fixed allowlist of paths/hosts (or validate the target with new URL() and check origin); never redirect to raw user input.</p>
+</article>
+<article class="finding">
+<h3>sec-open-redirect/vulnerable.ts:15</h3>
+<p><span class="badge rule">sec-open-redirect</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible open redirect: the redirect target is a non-literal value; an attacker-supplied URL here enables phishing via your domain&#39;s trust</p>
+<pre><code>window.location = dest</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Redirect only to a fixed allowlist of paths/hosts (or validate the target with new URL() and check origin); never redirect to raw user input.</p>
+</article>
+<article class="finding">
+<h3>sec-path-traversal/vulnerable.js:8</h3>
+<p><span class="badge rule">sec-path-traversal</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible path traversal: a filesystem path built from a non-literal value reaches fs.readFile/path.join/open(); &#39;../&#39; segments could escape the intended directory</p>
+<pre><code>path.join(BASE, name)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Resolve the path against a base directory and verify the result stays inside it (path.resolve + startsWith check), or map user input through an allowlist to fixed paths.</p>
+</article>
+<article class="finding">
+<h3>sec-path-traversal/vulnerable.js:12</h3>
+<p><span class="badge rule">sec-path-traversal</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible path traversal: a filesystem path built from a non-literal value reaches fs.readFile/path.join/open(); &#39;../&#39; segments could escape the intended directory</p>
+<pre><code>fs.readFileSync(&quot;/etc/app/&quot; + name, &quot;utf8&quot;)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Resolve the path against a base directory and verify the result stays inside it (path.resolve + startsWith check), or map user input through an allowlist to fixed paths.</p>
+</article>
+<article class="finding">
+<h3>sec-path-traversal/vulnerable.js:20</h3>
+<p><span class="badge rule">sec-path-traversal</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible path traversal: a filesystem path built from a non-literal value reaches fs.readFile/path.join/open(); &#39;../&#39; segments could escape the intended directory</p>
+<pre><code>fs.readFile(&quot;/var/app/data/&quot; + name.replace(&quot;../&quot;, &quot;&quot;), &quot;utf8&quot;, cb)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Resolve the path against a base directory and verify the result stays inside it (path.resolve + startsWith check), or map user input through an allowlist to fixed paths.</p>
+</article>
+<article class="finding">
+<h3>sec-path-traversal/vulnerable.py:3</h3>
+<p><span class="badge rule">sec-path-traversal</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible path traversal: a filesystem path built from a non-literal value reaches fs.readFile/path.join/open(); &#39;../&#39; segments could escape the intended directory</p>
+<pre><code>open(&quot;/var/app/data/&quot; + name)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Resolve the path against a base directory and verify the result stays inside it (path.resolve + startsWith check), or map user input through an allowlist to fixed paths.</p>
+</article>
+<article class="finding">
+<h3>sec-path-traversal/vulnerable.py:7</h3>
+<p><span class="badge rule">sec-path-traversal</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible path traversal: a filesystem path built from a non-literal value reaches fs.readFile/path.join/open(); &#39;../&#39; segments could escape the intended directory</p>
+<pre><code>open(user_path)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Resolve the path against a base directory and verify the result stays inside it (path.resolve + startsWith check), or map user input through an allowlist to fixed paths.</p>
+</article>
+<article class="finding">
+<h3>sec-path-traversal/vulnerable.ts:8</h3>
+<p><span class="badge rule">sec-path-traversal</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible path traversal: a filesystem path built from a non-literal value reaches fs.readFile/path.join/open(); &#39;../&#39; segments could escape the intended directory</p>
+<pre><code>path.join(BASE, name)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Resolve the path against a base directory and verify the result stays inside it (path.resolve + startsWith check), or map user input through an allowlist to fixed paths.</p>
+</article>
+<article class="finding">
+<h3>sec-path-traversal/vulnerable.ts:12</h3>
+<p><span class="badge rule">sec-path-traversal</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible path traversal: a filesystem path built from a non-literal value reaches fs.readFile/path.join/open(); &#39;../&#39; segments could escape the intended directory</p>
+<pre><code>fs.readFileSync(&quot;/etc/app/&quot; + name, &quot;utf8&quot;)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Resolve the path against a base directory and verify the result stays inside it (path.resolve + startsWith check), or map user input through an allowlist to fixed paths.</p>
+</article>
+<article class="finding">
+<h3>sec-prototype-pollution/vulnerable.js:3</h3>
+<p><span class="badge rule">sec-prototype-pollution</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible prototype pollution: assignment to __proto__ / constructor.prototype / prototype lets attacker input mutate shared object prototypes</p>
+<pre><code>target[&quot;__proto__&quot;][key] = value</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Never assign attacker-influenced keys to __proto__ or prototype chains. Use Map for dynamic keys, Object.create(null) for dictionaries, or validate keys against an allowlist.</p>
+</article>
+<article class="finding">
+<h3>sec-regex-dos/vulnerable.js:2</h3>
+<p><span class="badge rule">sec-regex-dos</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible ReDoS: regex contains nested quantifiers ((a+)+-style) — crafted input can cause catastrophic backtracking and hang the process</p>
+<pre><code>/(a+)+$/</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Rewrite the pattern to avoid nested quantifiers (use possessive/atomic groups or a linear-time engine like RE2); add input length limits and timeouts.</p>
+</article>
+<article class="finding">
+<h3>sec-regex-dos/vulnerable.js:5</h3>
+<p><span class="badge rule">sec-regex-dos</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible ReDoS: regex contains nested quantifiers ((a+)+-style) — crafted input can cause catastrophic backtracking and hang the process</p>
+<pre><code>new RegExp(&quot;(&quot; + delim + &quot;+)+&quot;)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Rewrite the pattern to avoid nested quantifiers (use possessive/atomic groups or a linear-time engine like RE2); add input length limits and timeouts.</p>
+</article>
+<article class="finding">
+<h3>sec-regex-dos/vulnerable.py:4</h3>
+<p><span class="badge rule">sec-regex-dos</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible ReDoS: regex contains nested quantifiers ((a+)+-style) — crafted input can cause catastrophic backtracking and hang the process</p>
+<pre><code>re.compile(r&quot;(a+)+$&quot;)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Rewrite the pattern to avoid nested quantifiers (use possessive/atomic groups or a linear-time engine like RE2); add input length limits and timeouts.</p>
+</article>
+<article class="finding">
+<h3>sec-regex-dos/vulnerable.py:5</h3>
+<p><span class="badge rule">sec-regex-dos</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible ReDoS: regex contains nested quantifiers ((a+)+-style) — crafted input can cause catastrophic backtracking and hang the process</p>
+<pre><code>re.compile(r&quot;(\w+\s*)+&quot;)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Rewrite the pattern to avoid nested quantifiers (use possessive/atomic groups or a linear-time engine like RE2); add input length limits and timeouts.</p>
+</article>
+<article class="finding">
+<h3>sec-regex-dos/vulnerable.ts:2</h3>
+<p><span class="badge rule">sec-regex-dos</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible ReDoS: regex contains nested quantifiers ((a+)+-style) — crafted input can cause catastrophic backtracking and hang the process</p>
+<pre><code>/(a+)+$/</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Rewrite the pattern to avoid nested quantifiers (use possessive/atomic groups or a linear-time engine like RE2); add input length limits and timeouts.</p>
+</article>
+<article class="finding">
+<h3>sec-regex-dos/vulnerable.ts:5</h3>
+<p><span class="badge rule">sec-regex-dos</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible ReDoS: regex contains nested quantifiers ((a+)+-style) — crafted input can cause catastrophic backtracking and hang the process</p>
+<pre><code>new RegExp(&quot;(&quot; + delim + &quot;+)+&quot;)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Rewrite the pattern to avoid nested quantifiers (use possessive/atomic groups or a linear-time engine like RE2); add input length limits and timeouts.</p>
+</article>
+<article class="finding">
+<h3>sec-sql-injection/vulnerable.js:3</h3>
+<p><span class="badge rule">sec-sql-injection</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible SQL injection: SQL text is built with string concatenation or a template/f-string instead of bound parameters</p>
+<pre><code>db.query(&quot;SELECT * FROM users WHERE name = &#39;&quot; + name + &quot;&#39;&quot;)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Use parameterized queries / prepared statements (placeholders + a separate parameters argument) so user input is never interpolated into SQL text.</p>
+</article>
+<article class="finding">
+<h3>sec-sql-injection/vulnerable.js:7</h3>
+<p><span class="badge rule">sec-sql-injection</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible SQL injection: SQL text is built with string concatenation or a template/f-string instead of bound parameters</p>
+<pre><code>db.query(`SELECT * FROM users WHERE id = ${id}`)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Use parameterized queries / prepared statements (placeholders + a separate parameters argument) so user input is never interpolated into SQL text.</p>
+</article>
+<article class="finding">
+<h3>sec-sql-injection/vulnerable.js:14</h3>
+<p><span class="badge rule">sec-sql-injection</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible SQL injection: SQL text is built with string concatenation or a template/f-string instead of bound parameters</p>
+<pre><code>db.query(req.query.id)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Use parameterized queries / prepared statements (placeholders + a separate parameters argument) so user input is never interpolated into SQL text.</p>
+</article>
+<article class="finding">
+<h3>sec-sql-injection/vulnerable.py:3</h3>
+<p><span class="badge rule">sec-sql-injection</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible SQL injection: SQL text is built with string concatenation or a template/f-string instead of bound parameters</p>
+<pre><code>cursor.execute(&quot;SELECT * FROM users WHERE name = &#39;&quot; + name + &quot;&#39;&quot;)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Use parameterized queries / prepared statements (placeholders + a separate parameters argument) so user input is never interpolated into SQL text.</p>
+</article>
+<article class="finding">
+<h3>sec-sql-injection/vulnerable.py:7</h3>
+<p><span class="badge rule">sec-sql-injection</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible SQL injection: SQL text is built with string concatenation or a template/f-string instead of bound parameters</p>
+<pre><code>cursor.execute(f&quot;SELECT * FROM users WHERE id = {uid}&quot;)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Use parameterized queries / prepared statements (placeholders + a separate parameters argument) so user input is never interpolated into SQL text.</p>
+</article>
+<article class="finding">
+<h3>sec-sql-injection/vulnerable.ts:7</h3>
+<p><span class="badge rule">sec-sql-injection</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible SQL injection: SQL text is built with string concatenation or a template/f-string instead of bound parameters</p>
+<pre><code>db.query(&quot;SELECT * FROM users WHERE name = &#39;&quot; + name + &quot;&#39;&quot;)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Use parameterized queries / prepared statements (placeholders + a separate parameters argument) so user input is never interpolated into SQL text.</p>
+</article>
+<article class="finding">
+<h3>sec-sql-injection/vulnerable.ts:11</h3>
+<p><span class="badge rule">sec-sql-injection</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible SQL injection: SQL text is built with string concatenation or a template/f-string instead of bound parameters</p>
+<pre><code>db.query(`SELECT * FROM users WHERE id = ${id}`)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Use parameterized queries / prepared statements (placeholders + a separate parameters argument) so user input is never interpolated into SQL text.</p>
+</article>
+<article class="finding">
+<h3>sec-ssrf/vulnerable.js:5</h3>
+<p><span class="badge rule">sec-ssrf</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible SSRF: an HTTP request is made to a non-literal URL; if any part is attacker-controlled the server can be made to request internal resources</p>
+<pre><code>fetch(userUrl)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Validate the URL against an allowlist of hosts/schemes (or resolve it to a fixed set of endpoints); never fetch a raw user-supplied URL server-side.</p>
+</article>
+<article class="finding">
+<h3>sec-ssrf/vulnerable.js:10</h3>
+<p><span class="badge rule">sec-ssrf</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible SSRF: an HTTP request is made to a non-literal URL; if any part is attacker-controlled the server can be made to request internal resources</p>
+<pre><code>axios.get(&quot;https://cdn.example.com/avatars/&quot; + userId)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Validate the URL against an allowlist of hosts/schemes (or resolve it to a fixed set of endpoints); never fetch a raw user-supplied URL server-side.</p>
+</article>
+<article class="finding">
+<h3>sec-ssrf/vulnerable.py:8</h3>
+<p><span class="badge rule">sec-ssrf</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible SSRF: an HTTP request is made to a non-literal URL; if any part is attacker-controlled the server can be made to request internal resources</p>
+<pre><code>requests.get(user_url)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Validate the URL against an allowlist of hosts/schemes (or resolve it to a fixed set of endpoints); never fetch a raw user-supplied URL server-side.</p>
+</article>
+<article class="finding">
+<h3>sec-ssrf/vulnerable.py:12</h3>
+<p><span class="badge rule">sec-ssrf</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible SSRF: an HTTP request is made to a non-literal URL; if any part is attacker-controlled the server can be made to request internal resources</p>
+<pre><code>requests.get(&quot;https://cdn.example.com/avatars/&quot; + user_id)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Validate the URL against an allowlist of hosts/schemes (or resolve it to a fixed set of endpoints); never fetch a raw user-supplied URL server-side.</p>
+</article>
+<article class="finding">
+<h3>sec-ssrf/vulnerable.py:16</h3>
+<p><span class="badge rule">sec-ssrf</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible SSRF: an HTTP request is made to a non-literal URL; if any part is attacker-controlled the server can be made to request internal resources</p>
+<pre><code>urllib.request.urlopen(target)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Validate the URL against an allowlist of hosts/schemes (or resolve it to a fixed set of endpoints); never fetch a raw user-supplied URL server-side.</p>
+</article>
+<article class="finding">
+<h3>sec-ssrf/vulnerable.ts:5</h3>
+<p><span class="badge rule">sec-ssrf</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible SSRF: an HTTP request is made to a non-literal URL; if any part is attacker-controlled the server can be made to request internal resources</p>
+<pre><code>fetch(userUrl)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Validate the URL against an allowlist of hosts/schemes (or resolve it to a fixed set of endpoints); never fetch a raw user-supplied URL server-side.</p>
+</article>
+<article class="finding">
+<h3>sec-ssrf/vulnerable.ts:10</h3>
+<p><span class="badge rule">sec-ssrf</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible SSRF: an HTTP request is made to a non-literal URL; if any part is attacker-controlled the server can be made to request internal resources</p>
+<pre><code>axios.get(&quot;https://cdn.example.com/avatars/&quot; + userId)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Validate the URL against an allowlist of hosts/schemes (or resolve it to a fixed set of endpoints); never fetch a raw user-supplied URL server-side.</p>
+</article>
+<article class="finding">
+<h3>sec-weak-crypto/vulnerable.js:5</h3>
+<p><span class="badge rule">sec-weak-crypto</span><span class="badge source">source: ast</span></p>
+<p class="message">Weak cryptography: MD5/SHA-1 are broken for integrity/password use and DES is brute-forceable — collisions and key recovery are practical</p>
+<pre><code>crypto.createHash(&quot;md5&quot;)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Use SHA-256/SHA-512 (hashlib.sha256, createHash(&#39;sha256&#39;)) and AES-GCM; for passwords use bcrypt/scrypt/argon2, never a fast hash.</p>
+</article>
+<article class="finding">
+<h3>sec-weak-crypto/vulnerable.js:9</h3>
+<p><span class="badge rule">sec-weak-crypto</span><span class="badge source">source: ast</span></p>
+<p class="message">Weak cryptography: MD5/SHA-1 are broken for integrity/password use and DES is brute-forceable — collisions and key recovery are practical</p>
+<pre><code>crypto.createDecipher(&quot;des&quot;, key)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Use SHA-256/SHA-512 (hashlib.sha256, createHash(&#39;sha256&#39;)) and AES-GCM; for passwords use bcrypt/scrypt/argon2, never a fast hash.</p>
+</article>
+<article class="finding">
+<h3>sec-weak-crypto/vulnerable.py:8</h3>
+<p><span class="badge rule">sec-weak-crypto</span><span class="badge source">source: ast</span></p>
+<p class="message">Weak cryptography: MD5/SHA-1 are broken for integrity/password use and DES is brute-forceable — collisions and key recovery are practical</p>
+<pre><code>hashlib.md5(pw.encode())</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Use SHA-256/SHA-512 (hashlib.sha256, createHash(&#39;sha256&#39;)) and AES-GCM; for passwords use bcrypt/scrypt/argon2, never a fast hash.</p>
+</article>
+<article class="finding">
+<h3>sec-weak-crypto/vulnerable.py:12</h3>
+<p><span class="badge rule">sec-weak-crypto</span><span class="badge source">source: ast</span></p>
+<p class="message">Weak cryptography: MD5/SHA-1 are broken for integrity/password use and DES is brute-forceable — collisions and key recovery are practical</p>
+<pre><code>Crypto.Cipher.DES.new(key)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Use SHA-256/SHA-512 (hashlib.sha256, createHash(&#39;sha256&#39;)) and AES-GCM; for passwords use bcrypt/scrypt/argon2, never a fast hash.</p>
+</article>
+<article class="finding">
+<h3>sec-weak-crypto/vulnerable.ts:5</h3>
+<p><span class="badge rule">sec-weak-crypto</span><span class="badge source">source: ast</span></p>
+<p class="message">Weak cryptography: MD5/SHA-1 are broken for integrity/password use and DES is brute-forceable — collisions and key recovery are practical</p>
+<pre><code>crypto.createHash(&quot;md5&quot;)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Use SHA-256/SHA-512 (hashlib.sha256, createHash(&#39;sha256&#39;)) and AES-GCM; for passwords use bcrypt/scrypt/argon2, never a fast hash.</p>
+</article>
+<article class="finding">
+<h3>sec-weak-crypto/vulnerable.ts:9</h3>
+<p><span class="badge rule">sec-weak-crypto</span><span class="badge source">source: ast</span></p>
+<p class="message">Weak cryptography: MD5/SHA-1 are broken for integrity/password use and DES is brute-forceable — collisions and key recovery are practical</p>
+<pre><code>crypto.createDecipher(&quot;des&quot;, key)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Use SHA-256/SHA-512 (hashlib.sha256, createHash(&#39;sha256&#39;)) and AES-GCM; for passwords use bcrypt/scrypt/argon2, never a fast hash.</p>
+</article>
+<article class="finding">
+<h3>sec-xss/vulnerable.js:3</h3>
+<p><span class="badge rule">sec-xss</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible XSS sink: raw HTML is assigned to innerHTML/outerHTML (or dangerouslySetInnerHTML); unescaped user input here executes script</p>
+<pre><code>el.innerHTML = comment</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Prefer textContent / safe DOM APIs or a sanitizer (e.g. DOMPurify) before assigning HTML; never assign unescaped user input to innerHTML.</p>
+</article>
+<article class="finding">
+<h3>sec-xss/vulnerable.js:7</h3>
+<p><span class="badge rule">sec-xss</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible XSS sink: raw HTML is assigned to innerHTML/outerHTML (or dangerouslySetInnerHTML); unescaped user input here executes script</p>
+<pre><code>document.body.outerHTML = html</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Prefer textContent / safe DOM APIs or a sanitizer (e.g. DOMPurify) before assigning HTML; never assign unescaped user input to innerHTML.</p>
+</article>
+<article class="finding">
+<h3>sec-xss/vulnerable.js:11</h3>
+<p><span class="badge rule">sec-xss</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible XSS sink: raw HTML is assigned to innerHTML/outerHTML (or dangerouslySetInnerHTML); unescaped user input here executes script</p>
+<pre><code>dangerouslySetInnerHTML={{ __html: html }}</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Prefer textContent / safe DOM APIs or a sanitizer (e.g. DOMPurify) before assigning HTML; never assign unescaped user input to innerHTML.</p>
+</article>
+<article class="finding">
+<h3>sec-xss/vulnerable.ts:3</h3>
+<p><span class="badge rule">sec-xss</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible XSS sink: raw HTML is assigned to innerHTML/outerHTML (or dangerouslySetInnerHTML); unescaped user input here executes script</p>
+<pre><code>el.innerHTML = comment</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Prefer textContent / safe DOM APIs or a sanitizer (e.g. DOMPurify) before assigning HTML; never assign unescaped user input to innerHTML.</p>
+</article>
+<article class="finding">
+<h3>sec-xss/vulnerable.ts:7</h3>
+<p><span class="badge rule">sec-xss</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible XSS sink: raw HTML is assigned to innerHTML/outerHTML (or dangerouslySetInnerHTML); unescaped user input here executes script</p>
+<pre><code>document.body.outerHTML = html</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Prefer textContent / safe DOM APIs or a sanitizer (e.g. DOMPurify) before assigning HTML; never assign unescaped user input to innerHTML.</p>
+</article>
+<article class="finding">
+<h3>sec-xxe/vulnerable.js:5</h3>
+<p><span class="badge rule">sec-xxe</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible XXE: this XML parser resolves external entities by default — a malicious document can read local files or probe the network</p>
+<pre><code>xml2js.parseString(xmlData, cb)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Use defusedxml (defusedxml.ElementTree / defusedxml.minidom) in Python, or a parser configured with external-entity resolution disabled.</p>
+</article>
+<article class="finding">
+<h3>sec-xxe/vulnerable.py:8</h3>
+<p><span class="badge rule">sec-xxe</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible XXE: this XML parser resolves external entities by default — a malicious document can read local files or probe the network</p>
+<pre><code>xml.etree.ElementTree.parse(uploaded_file)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Use defusedxml (defusedxml.ElementTree / defusedxml.minidom) in Python, or a parser configured with external-entity resolution disabled.</p>
+</article>
+<article class="finding">
+<h3>sec-xxe/vulnerable.py:12</h3>
+<p><span class="badge rule">sec-xxe</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible XXE: this XML parser resolves external entities by default — a malicious document can read local files or probe the network</p>
+<pre><code>lxml.etree.parse(uploaded_file)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Use defusedxml (defusedxml.ElementTree / defusedxml.minidom) in Python, or a parser configured with external-entity resolution disabled.</p>
+</article>
+<article class="finding">
+<h3>sec-xxe/vulnerable.py:16</h3>
+<p><span class="badge rule">sec-xxe</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible XXE: this XML parser resolves external entities by default — a malicious document can read local files or probe the network</p>
+<pre><code>xml.dom.minidom.parse(uploaded_file)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Use defusedxml (defusedxml.ElementTree / defusedxml.minidom) in Python, or a parser configured with external-entity resolution disabled.</p>
+</article>
+<article class="finding">
+<h3>sec-xxe/vulnerable.ts:5</h3>
+<p><span class="badge rule">sec-xxe</span><span class="badge source">source: ast</span></p>
+<p class="message">Possible XXE: this XML parser resolves external entities by default — a malicious document can read local files or probe the network</p>
+<pre><code>xml2js.parseString(xmlData, cb)</code></pre>
+<p class="remediation"><strong>Remediation:</strong> Use defusedxml (defusedxml.ElementTree / defusedxml.minidom) in Python, or a parser configured with external-entity resolution disabled.</p>
+</article>
+</section>
+<footer>Generated by <a href="https://github.com/TamTunnel/redteam">redteam</a> v0.1.0.</footer>
+</body>
+</html>
