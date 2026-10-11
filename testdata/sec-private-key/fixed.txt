@@ -1,0 +1,2 @@
+# the TLS private key is provisioned from the secret manager at deploy time
+tls_key_path = "/run/secrets/tls.key"

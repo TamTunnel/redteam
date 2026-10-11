@@ -1,0 +1,12 @@
+# Defense in depth on top of the package.json "files" field:
+# never ship secrets, logs, fixtures, or working state in the published package.
+node_modules/
+dist/**/*.map
+*.tsbuildinfo
+.env
+.env.*
+coverage/
+*.log
+testdata/
+scripts/
+*.test.ts

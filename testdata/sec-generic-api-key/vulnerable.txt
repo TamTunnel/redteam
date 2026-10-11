@@ -1,0 +1,5 @@
+api_key = "sk-4f8d2c9a1b7e5f3d9a2c"
+github_token = "ghp_abcdefghij1234567890ABCDEFGHIJ123456"
+slack_webhook = "xoxb-EXAMPLE-FAKE-TOKEN-12345"
+auth_token = "dGhpc2lzYXNlY3JldHRva2VuMTIzNDU2Nzg5MA=="
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9

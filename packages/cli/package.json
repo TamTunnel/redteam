@@ -1,0 +1,1 @@
+{"bin":{"redteam":"./dist/index.js"},"dependencies":{"@tamtunnel/redteam-core":"^0.1.0","citty":"^0.1.6"},"files":["dist","!dist/**/*.map"],"license":"Apache-2.0","name":"@tamtunnel/redteam","type":"module","version":"0.1.0"}

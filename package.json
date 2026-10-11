@@ -1,0 +1,25 @@
+{
+  "bin": "./packages/cli/dist/index.js",
+  "description": "Adversarial security scanner for agent-built code",
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "ajv": "^8.17.1",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "Apache-2.0",
+  "name": "@tamtunnel/redteam",
+  "private": true,
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "version": "0.1.0",
+  "workspaces": [
+    "packages/*"
+  ]
+}

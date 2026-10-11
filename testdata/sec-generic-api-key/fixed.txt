@@ -1,0 +1,5 @@
+api_key = os.environ["API_KEY"]
+github_token = os.environ["GITHUB_TOKEN"]
+slack_webhook = os.environ["SLACK_WEBHOOK"]
+stripe_key = get_secret("stripe")
+auth_token = read_token_from_vault()

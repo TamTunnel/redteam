@@ -1,0 +1,2 @@
+session_seed = "k7#mQ2$vX9@nB4!pL8&zR5*tW1^yU6(eG3"
+client_nonce = "9f2B7d4E1a8C6e3F5b0D2a7C9e1F4b6d8"

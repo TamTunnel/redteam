@@ -1,0 +1,37 @@
+name: "Redteam — adversarial security scan"
+description: "Scan code with the Redteam adversarial security scanner (thin wrapper; the real work happens in the published @tamtunnel/redteam npm package)."
+author: "TamTunnel"
+
+branding:
+  icon: "shield"
+  color: "red"
+
+inputs:
+  directory:
+    description: "Directory to scan, relative to the repository root."
+    required: false
+    default: "."
+  fail-on:
+    description: "Minimum finding severity that fails the step (critical|high|medium|low|info)."
+    required: false
+    default: "high"
+  format:
+    description: "Report format (json|markdown|sarif|html)."
+    required: false
+    default: "markdown"
+  extra-args:
+    description: "Additional CLI args appended to the scan command, e.g. --exclude node_modules."
+    required: false
+    default: ""
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Run Redteam scan"
+      shell: bash
+      run: |
+        npx --yes @tamtunnel/redteam@latest scan \
+          "${{ inputs.directory }}" \
+          --fail-on "${{ inputs.fail-on }}" \
+          --format "${{ inputs.format }}" \
+          ${{ inputs.extra-args }}
